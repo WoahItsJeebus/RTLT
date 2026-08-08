@@ -20,4 +20,3 @@ for (const page of pages) {
     assert.doesNotMatch(html, /(?:href|src)=["']\/(?!RTLT(?:\/|["']))/i);
   });
 }
-

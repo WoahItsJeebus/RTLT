@@ -92,4 +92,3 @@ const home = await readFile(resolve(outputDirectory, "index.html"), "utf8");
 if (!home.includes("Robux Limit Tracker")) {
   throw new Error("The static home page did not render correctly.");
 }
-

@@ -26,4 +26,3 @@ npm.cmd run lint
 
 Every push to `main` publishes the static output through GitHub Pages. The
 public site does not have a sign-in system and does not collect visitor data.
-
