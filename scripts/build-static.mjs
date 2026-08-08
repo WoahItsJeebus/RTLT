@@ -1,4 +1,4 @@
-import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { access, cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -13,6 +13,18 @@ const routes = [
   { requestPath: "/privacy", outputPath: "privacy/index.html" },
   { requestPath: "/support", outputPath: "support/index.html" },
 ];
+
+async function exists(path) {
+  try {
+    await access(path);
+    return true;
+  } catch (error) {
+    if (error?.code === "ENOENT") {
+      return false;
+    }
+    throw error;
+  }
+}
 
 function makeStatic(html) {
   return html
@@ -35,9 +47,10 @@ for (const asset of [
   "icon.png",
   "og.png",
 ]) {
-  await cp(resolve(clientDirectory, asset), resolve(outputDirectory, asset), {
-    recursive: true,
-  });
+  const source = resolve(clientDirectory, asset);
+  if (await exists(source)) {
+    await cp(source, resolve(outputDirectory, asset), { recursive: true });
+  }
 }
 
 const workerUrl = pathToFileURL(resolve(projectRoot, "dist", "server", "index.js"));
