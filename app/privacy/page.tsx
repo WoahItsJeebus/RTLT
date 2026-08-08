@@ -31,7 +31,9 @@ export default function PrivacyPolicy() {
         </p>
         <div className="policy-meta">
           <span>Effective August 7, 2026</span>
-          <span>Last updated August 7, 2026</span>
+          <span data-last-updated-source="app/privacy/page.tsx">
+            Last updated August 7, 2026
+          </span>
           <span>Version 1.0</span>
         </div>
       </header>

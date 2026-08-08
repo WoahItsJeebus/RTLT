@@ -1,4 +1,5 @@
 import { access, cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { execFileSync } from "node:child_process";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -36,6 +37,40 @@ function makeStatic(html) {
     .replace(/(href|src)=["']\/(?!\/)/gi, `$1="${publicBasePath}/`)
     .replaceAll(`href="${publicBasePath}/privacy"`, `href="${publicBasePath}/privacy/"`)
     .replaceAll(`href="${publicBasePath}/support"`, `href="${publicBasePath}/support/"`);
+}
+
+function getLastCommitDate(sourcePath) {
+  const commitDate = execFileSync(
+    "git",
+    [
+      "-c",
+      `safe.directory=${projectRoot.replaceAll("\\", "/")}`,
+      "log",
+      "-1",
+      "--format=%cI",
+      "--",
+      sourcePath,
+    ],
+    { cwd: projectRoot, encoding: "utf8" },
+  ).trim();
+
+  if (!commitDate) {
+    throw new Error(`No Git commit date was found for ${sourcePath}.`);
+  }
+
+  return new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(commitDate));
+}
+
+function injectCommitDates(html) {
+  return html.replace(
+    /<span data-last-updated-source="([^"]+)">[\s\S]*?<\/span>/g,
+    (_match, sourcePath) => `<span>Last updated ${getLastCommitDate(sourcePath)}</span>`,
+  );
 }
 
 await rm(outputDirectory, { recursive: true, force: true });
@@ -83,7 +118,11 @@ for (const route of routes) {
 
   const outputPath = resolve(outputDirectory, route.outputPath);
   await mkdir(dirname(outputPath), { recursive: true });
-  await writeFile(outputPath, makeStatic(await response.text()), "utf8");
+  await writeFile(
+    outputPath,
+    injectCommitDates(makeStatic(await response.text())),
+    "utf8",
+  );
 }
 
 await writeFile(resolve(outputDirectory, ".nojekyll"), "", "utf8");
