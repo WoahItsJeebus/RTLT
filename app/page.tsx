@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Know what counts. Know when it clears.",
@@ -39,12 +40,12 @@ export default function Home() {
             into a useful timeline—without sending your transaction data to us.
           </p>
           <div className="hero-actions">
-            <a className="button button-primary" href="/privacy">
+            <Link className="button button-primary" href="/privacy">
               Read the privacy policy
-            </a>
-            <a className="button button-secondary" href="/support">
+            </Link>
+            <Link className="button button-secondary" href="/support">
               Get support
-            </a>
+            </Link>
           </div>
           <div className="trust-line" aria-label="Privacy highlights">
             <span>Processed in your browser</span>
@@ -131,9 +132,9 @@ export default function Home() {
             password or security cookie, save transaction history, run
             analytics, or send information to the developer.
           </p>
-          <a className="text-link" href="/privacy">
+          <Link className="text-link" href="/privacy">
             See exactly what is accessed <span aria-hidden="true">→</span>
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -147,3 +148,4 @@ export default function Home() {
     </main>
   );
 }
+

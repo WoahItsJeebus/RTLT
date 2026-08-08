@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Support",
@@ -61,7 +62,7 @@ export default function Support() {
           <p>
             Robux Limit Tracker never asks for your Roblox password or security
             cookie. Do not share either one in a support request. Review the
-            complete <a href="/privacy">privacy policy</a> for details.
+            complete <Link href="/privacy">privacy policy</Link> for details.
           </p>
         </section>
 
@@ -92,3 +93,4 @@ export default function Support() {
     </main>
   );
 }
+

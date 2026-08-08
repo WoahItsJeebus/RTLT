@@ -8,8 +8,9 @@
   "scripts": {
     "dev": "vinext dev",
     "build": "vinext build",
+    "build:static": "npm run build && node scripts/build-static.mjs",
     "start": "vinext start",
-    "test": "npm run build && node --test tests/rendered-html.test.mjs",
+    "test": "npm run build:static && node --test tests/rendered-html.test.mjs tests/static-site.test.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "check": "npm run lint && npm test"
   },
@@ -42,3 +43,4 @@
   },
   "type": "module"
 }
+

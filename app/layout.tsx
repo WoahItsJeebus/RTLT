@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
+import Link from "next/link";
 import "./globals.css";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -64,16 +65,18 @@ export default function RootLayout({
       <body>
         <header className="site-header">
           <div className="header-inner shell">
-            <a className="brand" href="/" aria-label="Robux Limit Tracker home">
+            <Link className="brand" href="/" aria-label="Robux Limit Tracker home">
+              {/* A local icon does not benefit from the image optimization service. */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/icon.png" alt="" width="40" height="40" />
               <span>
                 <strong>Robux Limit Tracker</strong>
                 <small>Unofficial browser extension</small>
               </span>
-            </a>
+            </Link>
             <nav aria-label="Main navigation">
-              <a href="/privacy">Privacy</a>
-              <a href="/support">Support</a>
+              <Link href="/privacy">Privacy</Link>
+              <Link href="/support">Support</Link>
               <a href="https://github.com/WoahItsJeebus/RTLT" rel="noreferrer" target="_blank">
                 Source
               </a>
@@ -88,8 +91,8 @@ export default function RootLayout({
               <p>A focused, local view of outgoing transfer limits.</p>
             </div>
             <nav aria-label="Footer navigation">
-              <a href="/privacy">Privacy policy</a>
-              <a href="/support">Support</a>
+              <Link href="/privacy">Privacy policy</Link>
+              <Link href="/support">Support</Link>
               <a href="https://github.com/WoahItsJeebus/RTLT/issues" rel="noreferrer" target="_blank">
                 Report an issue
               </a>
@@ -103,3 +106,4 @@ export default function RootLayout({
     </html>
   );
 }
+

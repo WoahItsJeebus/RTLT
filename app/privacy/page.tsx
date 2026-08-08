@@ -109,7 +109,7 @@ export default function PrivacyPolicy() {
             <p>
               The extension does not use this information to create profiles,
               serve advertisements, determine eligibility or creditworthiness,
-              train artificial intelligence systems, or provide unrelated features.
+              train models, or provide unrelated features.
             </p>
           </section>
 
@@ -228,3 +228,4 @@ export default function PrivacyPolicy() {
     </main>
   );
 }
+
